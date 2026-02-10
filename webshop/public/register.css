@@ -1,0 +1,179 @@
+html {
+    background: radial-gradient(circle at center, #84cc16, transparent);
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100%;
+}
+
+body {
+    font-family: system-ui, sans-serif;
+    max-width: 500px;
+    margin: auto;
+    padding: 1em;
+    color: #363636;
+}
+h1 {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 1em;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, monospace
+}
+
+form {
+    display: flex; 
+    flex-direction: column;
+    gap: 1em;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 4px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 95%;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background: #efefef;
+    font-size: 1em;
+    outline: none;
+    align-content: center;
+}
+
+select {
+    width: 50%;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background: #efefef;
+    font-size: 1em;
+    outline: none;
+}
+
+input[type="checkbox"] {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+}
+
+input:focus,
+select:focus {
+    box-shadow: 0 0 0 3px #ffcf11ab;
+}
+
+.input-error {
+    box-shadow: 0 0 0 3px #e31313ab;
+}
+
+button {
+    padding: 10px 30px;
+    border: none;
+    border-radius: 6px;
+    background: #1f211f;
+    font-size: 1em;
+    color:white;
+    cursor: pointer;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+button:hover {
+    background: #383838;
+}
+
+cite {
+    font-style: normal;
+    font-size: 0.9em;
+    color: rgb(201, 201, 201);
+}
+
+ul {
+    margin: 0.5em 0 0 1.2em;
+}
+
+li {
+    margin-bottom: 0.3em;
+}
+
+:root {
+  --clickhighlight-duration: 0.1s;
+}
+
+input,
+select,
+button,
+textarea {
+  transition:
+    background-color var(--clickhighlight-duration) linear,
+    border-color var(--clickhighlight-duration) linear,
+    color var(--clickhighlight-duration) linear,
+    box-shadow var(--clickhighlight-duration) linear,
+    transform var(--clickhighlight-duration) ease;
+}
+
+.form-box{
+    background: linear-gradient(to bottom right, #5d910f, #476f0b);
+    padding: 2.5em;
+    border-radius: 20px;
+    width: 420px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    position: relative;
+    z-index: 2;
+}
+
+.eisenshoptextpng {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 15%;
+    height: auto;
+    z-index: 0;
+    pointer-events: none;
+    padding: 25px;
+}
+
+.passinput{
+    border: none;
+    border-radius: 6px;
+    background: #efefef;
+    font-size: 1em;
+    outline: none;
+    display:flex;
+    align-items: center;
+}
+
+.passinput img{
+    width: 25px;
+    cursor:pointer;
+    padding: 10px;
+    z-index: 0;
+    outline:none;
+}
+
+.passinput:focus-within {
+    box-shadow: 0 0 0 3px #ffcf11ab;
+}
+
+.passinput input:focus {
+    box-shadow: none;
+}
+
+.form-links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1em;
+}
+
+.form-links p {
+    font-style: italic;
+    text-decoration: underline;
+    cursor: pointer;
+    margin: 0;
+}
+
+.register-form, .form-links {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
