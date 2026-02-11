@@ -1,6 +1,6 @@
 SETUP GUIDE:
 
-Open folder in Visual Studio Code
+Open folder in Visual Studio Code <br />
 Open a new terminal
 Run "npm install"
 Wait for completion
