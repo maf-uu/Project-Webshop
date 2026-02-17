@@ -38,6 +38,7 @@ model Items {
   createdBy String 
   price Int
   itemstatus ItemStatus @default(ELADO)
+  filePath String?
 
   //Kötések
   owner User @relation("Owner", fields: [userid], references: [id], onDelete: Cascade)

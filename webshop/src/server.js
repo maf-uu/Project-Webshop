@@ -2,6 +2,22 @@ const express = require("express");
 const { config } = require("dotenv");
 const { connectDB, disconnectDB } = require("./config/db.js");
 
+
+//multer
+const multer = require("multer");
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "uploads/");
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + "-" + file.originalname);
+    }});
+const upload = multer({ storage: storage });
+
+
+
+
+
 //router import
 const itemroutes = require("./routes/itemroutes.js");
 const authroutes =require("./routes/authroutes.js");
@@ -53,7 +69,10 @@ process.on("SIGTERM", async () => {
     });
 });
 
-
+//upload item
+app.post('/api/upload',upload.single('file'), (req, res) => {
+    res.json(req.file);
+});
 
 
 //http://localhost:3000/

@@ -274,7 +274,6 @@ textarea{
     top: 55%;
     left: 50%;
     transform: translate(-50%, -45%);
-    user-select: none;
 }
 
 .hidden {
@@ -352,88 +351,4 @@ textarea{
     opacity: 1;
     transform: translateX(0);
     pointer-events: auto;
-}
-
-.accountInfo{
-    left:500px;
-    width: auto;
-    height: auto;
-    padding-top: 15px;
-    padding-right: 250px;
-    padding-bottom: 25px;
-    padding-left: 40px;
-    color:white;
-    text-align: left;
-    background: rgba(0, 0, 0, 0.5);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    border-radius: 12px;
-    backdrop-filter: blur(6px);
-}
-
-li{
-    margin-bottom: 10px;
-}
-
-.accountInfoLabel{
-    font-size: 1.5rem;
-    letter-spacing: -0.5px;
-    color: #8ecf2c;
-}
-
-.userLogout{
-    margin-top: 40px;
-    padding: 20px 20px 20px;
-    border: none;
-    border-radius: 6px;
-    background: #363636;
-    justify-content: center;
-    align-items: center;
-    font-size: 1em;
-    color:white;
-    cursor: pointer;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, bolder;
-    letter-spacing: 0.6px;
-}
-
-.userDelete{
-    margin-top: 40px;
-    margin-left: 250px;
-    padding: 15px 15px 15px;
-    border: none;
-    border-radius: 6px;
-    background: #181818;
-    justify-content: center;
-    align-items: center;
-    font-size: 1em;
-    color:white;
-    cursor: pointer;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, bolder;
-    letter-spacing: 0.6px;
-    position: relative;
-    z-index: 22;
-}
-
-.userLogout:hover{
-    background: #706b6b;
-    transform: translateY(-1px);
-}
-
-.userDelete:hover{
-    background: #e62f2f;
-    transform: translateY(-1px);
-    transform: scale(1.03);
-}
-
-.pageOverlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.5);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-    z-index: 21;
-}
-
-.pageOverlay.active{
-    opacity: 1;
 }
