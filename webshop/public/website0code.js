@@ -10,9 +10,8 @@ function showsection(name)
     active.classList.remove("hidden");
 }
 
-// Display username on page load
+// Display username everywhere on page load
 function displayUsername() {
-    const usernameDisplay = document.querySelector('.usernameDisplay p');
     const cookies = document.cookie.split(';');
     let userName = 'Guest User';
     
@@ -24,10 +23,14 @@ function displayUsername() {
         }
     }
     
-    usernameDisplay.textContent = userName;
+    const usernameElements = document.querySelectorAll('.usernameText')
+
+    usernameElements.forEach(function(el) {
+        el.textContent = userName;
+    });
 }
 
-// Handle account button click - logout if logged in, otherwise go to register
+// Handle account button click - shows account section when logged in, otherwise go to register
 function handleAccountClick() {
     const cookies = document.cookie.split(';');
     let isLoggedIn = false;
@@ -41,19 +44,36 @@ function handleAccountClick() {
     }
     
     if (isLoggedIn) {
-        // User is logged in, so logout
-        fetch('/auth/logout', {
-            method: 'POST'
-        }).then(() => {
-            // Clear cookies and redirect
-            document.cookie = "userName=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            document.cookie = "jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            window.location.href = '/login.html';
-        }).catch(err => console.error('Logout failed:', err));
+        showsection('account');
     } else {
         // User is not logged in, go to register page
         window.location.href = '/register.html';
     }
+}
+
+//Logout button, then go to login page
+function userLogout() {
+    fetch('/auth/logout', {
+        method: 'POST'
+    }).then(() => {
+        // Clear cookies and redirect
+        document.cookie = "userName=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        window.location.href = '/login.html';
+    }).catch(err => console.error('Logout failed:', err));
+}
+
+function userDelete(){
+
+}
+
+//This actives and removes the shading effect when hovering "Delete Account" button in account section
+const overlay = document.querySelector('.pageOverlay');
+function shadeOverlayShow() {
+    overlay.classList.add('active');
+}
+function shadeOverlayRemove() {
+    overlay.classList.remove('active');
 }
 
 // Call displayUsername when the page loads
