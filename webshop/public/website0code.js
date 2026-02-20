@@ -223,3 +223,13 @@ function openCartFromPopup() {
     popup.classList.remove("show");
     showsection('cart');
 }
+
+//Using the CheckoutReturn button in Checkout brings user back to website0.html and shows the cart section
+window.onload = function() {
+    if (window.location.hash === "#cart") {
+        showsection("cart");
+
+        //Removes #cart hash so upon reload of page, it ends user back to regular frontpage state
+        history.replaceState(null, null, window.location.pathname);
+    }
+};
