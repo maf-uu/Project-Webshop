@@ -16,6 +16,7 @@ html{
     user-select: none;
     margin:auto;
     display:flex;
+    position:relative;
 }
 
 .checkoutreturnpng{
@@ -53,7 +54,7 @@ body {
         to top,
         #7aaa32 0%,
         #728b49 40%,
-        #8e8f8c 100%
+        #b3b4b1 100%
     );
 
     background-repeat: no-repeat;
@@ -81,7 +82,7 @@ p {
 
 cite{
     font-style: normal;
-    font-size: 0.9em;
+    font-size: 0.85em;
     color: rgb(119, 119, 119);
 }
 
@@ -153,7 +154,7 @@ select:focus {
 
 .deliveryForm{
     height: fit-content;
-    width: fit-content;
+    width: 20%;
     color:#cccccc;
     text-align: left;
     background: linear-gradient(to bottom right, #424242, #1a1a1a);
@@ -167,7 +168,7 @@ select:focus {
 
 .cartListCost{
     height: fit-content;
-    width: fit-content;
+    width: 20%;
     color:#cccccc;
     text-align: left;
     background: linear-gradient(to bottom right, #6a9e1c, #507e11);
@@ -199,4 +200,18 @@ input[type="email"] {
     font-size: 1em;
     outline: none;
     align-content: center;
+}
+
+.treesbackground{
+    position: fixed;
+    inset: 0;
+    object-fit: cover;
+    opacity: 0.15;
+    z-index: 0;
+    pointer-events: none;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -55%);
+    user-select: none;
+    width:80%;
 }
