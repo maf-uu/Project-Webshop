@@ -1,0 +1,202 @@
+html{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+.eisenshoptextpng{
+    width: 25%;
+    height: auto;
+    text-align: center;
+    z-index: 11;
+    pointer-events: none;
+    padding: 25px;
+    margin-top: -10px;
+    user-select: none;
+    margin:auto;
+    display:flex;
+}
+
+.checkoutreturnpng{
+    border-style:solid;
+    border-color:#ffffff;
+    border-radius: 17px;
+    border-width: 6px;
+    cursor:pointer;
+    transition: transform var(--pnghover-duration) ease;
+    position: fixed;
+    top: 0;
+    left: 20px;
+    top: 20px;
+    width: 40px;
+    height: auto;
+    margin:30px;
+    padding:5px;
+    margin-top: 18px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.checkoutreturnpng:hover{
+    transform: scale(1.05);
+    border-color: #7aaa32;
+    transition:
+    border-color var(--clickhighlight-duration) linear,
+    transform var(--clickhighlight-duration) ease;
+}
+
+body {
+    font-family: system-ui, sans-serif;
+    color: #363636;
+
+    background: linear-gradient(
+        to top,
+        #7aaa32 0%,
+        #567425 40%,
+        #42463e 100%
+    );
+
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+h1{
+    text-align: center;
+    font-size: 2em;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, monospace;
+}
+
+h2 {
+    font-size: 2.2rem;
+    margin-bottom: 5px;
+    letter-spacing: -0.5px
+}
+
+p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    max-width: 600px;
+}
+
+cite{
+    font-style: normal;
+    font-size: 0.9em;
+    color: rgb(119, 119, 119);
+}
+
+.payNowButton {
+    margin: 30px auto 0 auto;
+    width: 50%;
+    padding: 15px 1px;
+    border: none;
+    border-radius: 6px;
+    background: #497704;
+    text-align: center;
+    font-size: 1em;
+    color:white;
+    cursor: pointer;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.payNowButton:hover{
+    background: #659420;
+    transform: translateY(-1px);
+    transition:
+    background-color var(--clickhighlight-duration) linear,
+    border-color var(--clickhighlight-duration) linear,
+    color var(--clickhighlight-duration) linear,
+    box-shadow var(--clickhighlight-duration) linear,
+    transform var(--clickhighlight-duration) ease;
+    box-shadow: 0 0 0 3px #57e217;
+}
+
+.payNowButton:active {
+    transform: translateY(0);
+}
+
+:root{
+  --clickhighlight-duration: 0.1s;
+  --pnghover-duration:0.5s;
+}
+
+input,
+select,
+button,
+textarea{
+  transition:
+    background-color var(--clickhighlight-duration) linear,
+    border-color var(--clickhighlight-duration) linear,
+    color var(--clickhighlight-duration) linear,
+    box-shadow var(--clickhighlight-duration) linear,
+    transform var(--clickhighlight-duration) ease;
+}
+
+input:focus,
+select:focus {
+    box-shadow: 0 0 0 3px #92bb86;
+}
+
+.input-error {
+    box-shadow: 0 0 0 3px #e31313ab;
+}
+
+.checkoutLayout{
+    display:flex;
+    justify-content: center;
+    align-content: center;
+    gap:100px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.deliveryForm{
+    height: fit-content;
+    width: fit-content;
+    color:#cccccc;
+    text-align: left;
+    background: linear-gradient(to bottom right, #424242, #1a1a1a);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    backdrop-filter: blur(6px);
+    padding: 1.5em;
+    position: relative;
+    z-index: 2;
+}
+
+.cartListCost{
+    height: fit-content;
+    width: fit-content;
+    color:#cccccc;
+    text-align: left;
+    background: linear-gradient(to bottom right, #6a9e1c, #507e11);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    backdrop-filter: blur(6px);
+    padding: 1.5em;
+    position: relative;
+    z-index: 2;
+}
+form {
+    display: flex; 
+    flex-direction: column;
+    gap: 0.3em;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 4px;
+}
+
+input[type="text"],
+input[type="email"] {
+    width: 95%;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background: #efefef;
+    font-size: 1em;
+    outline: none;
+    align-content: center;
+}
