@@ -437,3 +437,36 @@ li{
 .pageOverlay.active{
     opacity: 1;
 }
+
+.uploadButton{
+    padding: 15px 30px;
+    border: none;
+    border-radius: 6px;
+    background: #363636;
+    font-size: 1em;
+    color:white;
+    cursor: pointer;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.productBrowse{
+    right:1450px;
+    width: 150px;
+    height: 500px;
+    padding-top: 15px;
+    padding-right: 250px;
+    padding-bottom: 25px;
+    padding-left: 40px;
+    color:white;
+    text-align: left;
+    position:absolute;
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    backdrop-filter: blur(6px);
+}
+
+.product{
+    left:950px;
+    position: absolute;
+}
