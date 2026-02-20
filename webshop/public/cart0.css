@@ -39,7 +39,7 @@ html{
 
 .checkoutreturnpng:hover{
     transform: scale(1.05);
-    border-color: #7aaa32;
+    border-color: #86d116;
     transition:
     border-color var(--clickhighlight-duration) linear,
     transform var(--clickhighlight-duration) ease;
@@ -52,8 +52,8 @@ body {
     background: linear-gradient(
         to top,
         #7aaa32 0%,
-        #567425 40%,
-        #42463e 100%
+        #728b49 40%,
+        #8e8f8c 100%
     );
 
     background-repeat: no-repeat;
