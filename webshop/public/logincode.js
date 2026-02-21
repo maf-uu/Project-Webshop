@@ -1,11 +1,11 @@
 let eyeicon = document.getElementById("logineyeicon");
 
 eyeicon.onclick = function(){
-    if(loginpassword.type == "password"){
-        loginpassword.type = "text";
+    if(password.type == "password"){
+        password.type = "text";
         logineyeicon.src = "eye-open.png"
     }else{
-        loginpassword.type = "password";
+        password.type = "password";
         logineyeicon.src = "eye-close.png"
     }
 }
