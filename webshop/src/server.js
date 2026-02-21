@@ -21,6 +21,8 @@ const upload = multer({ storage: storage });
 //router import
 const itemroutes = require("./routes/itemroutes.js");
 const authroutes =require("./routes/authroutes.js");
+//added this for accessing images -Kris
+app.use('/uploads', express.static('uploads'));
 
 config();
 connectDB();
@@ -80,3 +82,4 @@ app.post('/api/upload',upload.single('file'), (req, res) => {
 //AUTH (login, sign up)
 //ITEMS (items uploaded)
 //USER (profile) 
+
