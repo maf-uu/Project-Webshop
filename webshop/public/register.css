@@ -60,7 +60,7 @@ input[type="checkbox"] {
 
 input:focus,
 select:focus {
-    box-shadow: 0 0 0 3px #ffcf11ab;
+    box-shadow: 0 0 0 3px #92bb86;
 }
 
 .input-error {
@@ -152,7 +152,7 @@ textarea {
 }
 
 .passinput:focus-within {
-    box-shadow: 0 0 0 3px #ffcf11ab;
+    box-shadow: 0 0 0 3px #92bb86;
 }
 
 .passinput input:focus {
