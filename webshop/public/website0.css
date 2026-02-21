@@ -538,7 +538,7 @@ input[type="file"] {
     position: absolute;
     right: 10px;
     top: 50%;
-    transform: translateY(15%);
+    transform: translateY(24%);
     color: #777;
     font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif, bolder;
     letter-spacing: 1.5px;
@@ -555,3 +555,4 @@ select:focus,
 textarea:focus {
     box-shadow: 0 0 0 3px #92bb86;
 }
+
