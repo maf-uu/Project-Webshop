@@ -109,10 +109,8 @@ async function loadUserData() {
             .forEach(el => el.textContent = user.phone);
 
         document.querySelectorAll('.createdAtText')
-            .forEach(el => el.textContent =
-                new Date(user.createdAt).toLocaleString());
-
-    } catch (error) {
+            .forEach(el => el.textContent = new Date(user.createdAt).toLocaleString());
+        }catch (error) {
         console.error("Failed to load user data:", error);
     }
 }
