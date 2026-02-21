@@ -79,7 +79,7 @@
     <section id="upload" class="section hidden">
         <h2>Upload Item</h2>
         <div class="fileUploadForm">
-            <form id="uploaditem" action="/api/upload" method="post">
+            <form id="uploaditem" action="/items/upload" method="post" enctype="multipart/form-data">
                 <input type="text" id="name" name="name" placeholder="Item name" required>
 
                 <textarea type="text" id="description" name="description" placeholder="Description of item" required></textarea>
