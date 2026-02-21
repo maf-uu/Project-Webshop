@@ -78,16 +78,22 @@
 
     <section id="upload" class="section hidden">
         <h2>Upload Item</h2>
-        <form id="uploaditem" action="/api/upload" method="post">
-            <input type="text" id="name" name="name" placeholder="Item name" required>
+        <div class="fileUploadForm">
+            <form id="uploaditem" action="/api/upload" method="post">
+                <input type="text" id="name" name="name" placeholder="Item name" required>
 
-            <input type="text" id="description" name="description" placeholder="Description of item" required>
+                <textarea type="text" id="description" name="description" placeholder="Description of item" required></textarea>
 
-            <input type="number" id="price" name="phone" placeholder="Price" required>
+                <div class="currencyDisplay">
+                    <input type="number" id="price" name="price" placeholder="Price" min="0" max="10000000">
+                    <span class="currency">Ft</span>
+                </div>
 
-            <input type="file" id="file" name="file">
+                <input type="file" id="file" name="file" required>
 
-        </form>
+                <button type="submit" class="finishUploadButton">UPLOAD</button>
+            </form>
+        </div>
     </section>
 
     
@@ -98,7 +104,7 @@
             <ul>
                 <li><span class="accountInfoLabel">Name: </span><span class="nameText">Full Name</span></li>
                 <li><span class="accountInfoLabel">Username: </span><span class="usernameText">Username</span></li>
-                <li><span class="accountInfoLabel">Email: </span><span class="emailText">Email</li>
+                <li><span class="accountInfoLabel">Email: </span><span class="emailText">Email</span></li>
                 <li><span class="accountInfoLabel">Gender: </span><span class="genderText">Gender</span></li>
                 <li><span class="accountInfoLabel">Phone: </span><span class="phoneText">+36/XX-XXX-XXXX</span></li>
                 <li><span class="accountInfoLabel">Created At: </span><span class="createdAtText">1997-07-07 XX:XX</span></li>
