@@ -43,12 +43,12 @@
 
 
     <img src="leavesbackground.png" class="leavesbackground">
-    <section id="about" class="section">
+    <section id="about" class="section standardSection">
         <h2>About EisenShop</h2>
         <p>Welcome to EisenShop! This is a placeholder text.</p>
     </section>
 
-    <section id="products" class="section hidden">
+    <section id="products" class="section productSection hidden">
 
         <div class="productBrowse">
             <button onclick="handleUploadClick()" class="uploadButton">Upload Item</button>
@@ -65,18 +65,18 @@
 
     </section>
 
-    <section id="contact" class="section hidden">
+    <section id="contact" class="section standardSection hidden">
         <h2>Contact Us!</h2>
         <p>Ask us any questions you may have, we won't answer. This is a placeholder text.</p>
     </section>
 
-    <section id="cart" class="section hidden">
+    <section id="cart" class="section standardSection hidden">
         <h2>Your Cart</h2>
         <button onclick="goToCheckout()">Checkout</button>
         <p>This is where you view all your items. This is a placeholder text.</p>
     </section>
 
-    <section id="upload" class="section hidden">
+    <section id="upload" class="section standardSection hidden">
         <h2>Upload Item</h2>
         <div class="fileUploadForm">
             <form id="uploaditem" action="/items/upload" method="post" enctype="multipart/form-data">
@@ -97,7 +97,7 @@
     </section>
 
     
-    <section id="account" class="section hidden">
+    <section id="account" class="section standardSection hidden">
         <h2>Welcome, <span class="usernameText">Guest User</span></h2>
         <p>Here you can find your information! This is a placeholder text.</p>
         <div class="accountInfo">
