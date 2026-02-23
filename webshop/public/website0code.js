@@ -97,7 +97,10 @@ async function loadUserData() {
         const user = await response.json();
 
         document.querySelectorAll('.nameText')
-            .forEach(el => el.textContent = user.name);
+            .forEach(el => el.textContent = user.fullname);
+
+        document.querySelectorAll('.usernameText')
+            .forEach(el => el.textContent = user.username);
 
         document.querySelectorAll('.emailText')
             .forEach(el => el.textContent = user.email);
@@ -231,3 +234,4 @@ window.onload = function() {
         history.replaceState(null, null, window.location.pathname);
     }
 };
+
