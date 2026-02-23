@@ -1,0 +1,137 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EisenShop</title>
+    <link rel="stylesheet" href="website0.css">
+</head>
+
+<body>
+
+    <div class="topbackground"></div>
+
+    <div class="topbar">
+        <img src="EisenShopTextGray.png" class="eisenshoptextpng">
+
+        <div class="navwrapper">
+            <div class="navbuttons">
+                <button onclick="showsection('about')">About</button>
+                <button onclick="showsection('products')">Products</button>
+                <button onclick="showsection('contact')">Contact</button>
+            </div>
+        </div>
+
+        
+        <div class="usernameDisplay">
+            <p class="usernameText">Guest User</p>
+        </div>
+        
+
+        <img src="accountdetails.png" class="accountdetails" onclick="handleAccountClick()" style="cursor: pointer;">
+
+
+        <div class="cartwrapper">
+            <img src="cartdetails.png" class="cartdetails" onclick="showsection('cart')">
+            <div id="cartbadge" class="cartbadge">1</div>
+        </div>
+    </div>
+
+
+
+    <hr class="topline">
+
+
+
+    <img src="leavesbackground.png" class="leavesbackground">
+    <section id="about" class="section standardSection">
+        <h2>About EisenShop</h2>
+        <p>Welcome to EisenShop! This is a placeholder text.</p>
+    </section>
+
+    <section id="products" class="section productSection hidden">
+
+        <div class="productBrowse">
+            <button onclick="handleUploadClick()" class="uploadButton">Upload Item</button>
+            <p>search</p>
+        </div>
+
+        <div class="product">
+            <h2>Our Products</h2>
+            <p>Happy browsing! This is a placeholder text.</p>
+            <h3>Testing Item A</h3>
+            <button onclick="add_to_cart()">+</button>
+            <button onclick="remove_from_cart()">−</button>
+        </div>
+
+    </section>
+
+    <section id="contact" class="section standardSection hidden">
+        <h2>Contact Us!</h2>
+        <p>Ask us any questions you may have, we won't answer. This is a placeholder text.</p>
+    </section>
+
+    <section id="cart" class="section standardSection hidden">
+        <h2>Your Cart</h2>
+        <button onclick="goToCheckout()">Checkout</button>
+        <p>This is where you view all your items. This is a placeholder text.</p>
+    </section>
+
+    <section id="upload" class="section standardSection hidden">
+        <h2>Upload Item</h2>
+        <div class="fileUploadForm">
+            <form id="uploaditem" action="/items/upload" method="post" enctype="multipart/form-data">
+                <input type="text" id="name" name="name" placeholder="Item name" required>
+
+                <textarea type="text" id="description" name="description" placeholder="Description of item" required></textarea>
+
+                <div class="currencyDisplay">
+                    <input type="number" id="price" name="price" placeholder="Price" min="0" max="10000000">
+                    <span class="currency">Ft</span>
+                </div>
+
+                <input type="file" id="file" name="file" required>
+
+                <button type="submit" class="finishUploadButton">UPLOAD</button>
+            </form>
+        </div>
+    </section>
+
+    
+    <section id="account" class="section standardSection hidden">
+        <h2>Welcome, <span class="usernameText">Guest User</span></h2>
+        <p>Here you can find your information! This is a placeholder text.</p>
+        <div class="accountInfo">
+            <ul>
+                <li><span class="accountInfoLabel">Name: </span><span class="nameText">Full Name</span></li>
+                <li><span class="accountInfoLabel">Username: </span><span class="usernameText">Username</span></li>
+                <li><span class="accountInfoLabel">Email: </span><span class="emailText">Email</span></li>
+                <li><span class="accountInfoLabel">Gender: </span><span class="genderText">Gender</span></li>
+                <li><span class="accountInfoLabel">Phone: </span><span class="phoneText">+36/XX-XXX-XXXX</span></li>
+                <li><span class="accountInfoLabel">Created At: </span><span class="createdAtText">1997-07-07 XX:XX</span></li>
+            </ul>
+        </div>
+        <span><button class="userLogout" onclick="userLogout()">Logout</button><button class="userDelete" onclick="userDelete()" onmouseenter="shadeOverlayShow()" onmouseleave="shadeOverlayRemove()">Delete Account</button></span>
+        
+    </section>
+
+    
+
+    <div id="cart-popup" class="cart-popup">
+    <button class="close-popup">✖</button>
+
+    <p><strong>Item added to your cart</strong></p>
+
+    <div class="popup-actions">
+        <button onclick="openCartFromPopup()">View cart</button>
+        <button onclick="goToCheckout()">Checkout</button>
+    </div>
+
+    <a href="#" class="continue-shopping">Continue shopping</a>
+    </div>
+    
+
+<div class="pageOverlay"></div>
+<script src="website0code.js"></script>
+</body>
+
+</html>
