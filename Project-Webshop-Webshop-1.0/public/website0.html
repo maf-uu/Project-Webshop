@@ -1,4 +1,5 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +25,7 @@
 
         <div class="rightsideNav">
             <div class="usernameDisplay usernameText">Guest User</div>
-            
+
 
             <img src="accountdetails.png" class="accountdetails" onclick="handleAccountClick()">
 
@@ -94,7 +95,7 @@
         </div>
     </section>
 
-    
+
     <section id="account" class="section standardSection hidden">
         <h2>Welcome, <span class="usernameText">Guest User</span></h2>
         <p>Here you can find your information! This is a placeholder text.</p>
@@ -108,28 +109,30 @@
                 <li><span class="accountInfoLabel">Created At: </span><span class="createdAtText">1997-07-07 XX:XX</span></li>
             </ul>
         </div>
-        <span><button class="userLogout" onclick="userLogout()">Logout</button><button class="userDelete" onclick="userDelete()" onmouseenter="shadeOverlayShow()" onmouseleave="shadeOverlayRemove()">Delete Account</button></span>
-        
+        <div class="accountdetailsbuttons">
+            <button class="userLogout" onclick="userLogout()">Logout</button><button class="userDelete" onclick="userDelete()" onmouseenter="shadeOverlayShow()" onmouseleave="shadeOverlayRemove()">Delete Account</button>
+        </div>
+
     </section>
 
-    
+
 
     <div id="cart-popup" class="cart-popup">
-    <button class="close-popup">✖</button>
+        <button class="close-popup">✖</button>
 
-    <p><strong>Item added to your cart</strong></p>
+        <p><strong>Item added to your cart</strong></p>
 
-    <div class="popup-actions">
-        <button onclick="openCartFromPopup()">View cart</button>
-        <button onclick="goToCheckout()">Checkout</button>
+        <div class="popup-actions">
+            <button onclick="openCartFromPopup()">View cart</button>
+            <button onclick="goToCheckout()">Checkout</button>
+        </div>
+
+        <a href="#" class="continue-shopping">Continue shopping</a>
     </div>
 
-    <a href="#" class="continue-shopping">Continue shopping</a>
-    </div>
-    
 
-<div class="pageOverlay"></div>
-<script src="website0code.js"></script>
+    <div class="pageOverlay"></div>
+    <script src="website0code.js"></script>
 </body>
 
 </html>
