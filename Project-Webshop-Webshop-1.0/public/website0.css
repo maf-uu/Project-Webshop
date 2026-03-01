@@ -360,7 +360,7 @@ li {
 
 .accountdetailsbuttons {
     display: flex;
-    gap: 20px;
+    gap: 150px;
     margin-top: 40px;
 }
 
@@ -592,12 +592,13 @@ textarea:focus {
         backdrop-filter: blur(6px);
     }
     .navbuttons button {
-        padding: 20px 12px;
+        padding: 16px 20px;
         border: none;
         border-radius: 6px;
-        font-size: 0.7em;
+        font-size: 1.2em;
     }
     .topbar {
+        padding: 0;
         height: 150px;
         flex-direction: column;
         justify-content: center;
@@ -618,5 +619,21 @@ textarea:focus {
     }
     .cart-popup {
         top: 160px;
+    }
+    .accountdetailsbuttons {
+        gap: 50px;
+        margin-top: 20px;
+    }
+    .accountInfo {
+        padding-left: 12px;
+    }
+    .accountdetails {
+        margin-left: 34px;
+        margin-top: 7px;
+        padding: 5px 60px
+    }
+    .cartdetails {
+        margin-top: 7px;
+        padding: 5px 60px;
     }
 }
