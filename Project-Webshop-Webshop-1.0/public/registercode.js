@@ -8,7 +8,7 @@ document.getElementById("signup").addEventListener("submit", function(event) {
     let email = document.getElementById("email");
     let phone = document.getElementById("phone");
     let terms = document.getElementById("terms");
-    
+
     const passwordReq = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
     const phoneReq = /^\+\d{2}\/\d{2}-\d{3}-\d{4}$/;
     const emailReq = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -72,14 +72,14 @@ document.getElementById("signup").addEventListener("submit", function(event) {
 
 let eyeicon = document.getElementById("eyeicon");
 
-eyeicon.onclick = function(){
-    if(password.type == "password"){
+eyeicon.onclick = function() {
+    if (password.type == "password") {
         password.type = "text";
         confirmpassword.type = "text";
         eyeicon.src = "eye-open.png"
-    }else{
+    } else {
         password.type = "password";
-        confirmpassword.type="password";
+        confirmpassword.type = "password";
         eyeicon.src = "eye-close.png"
     }
 }
@@ -95,5 +95,24 @@ window.addEventListener("load", () => {
     if (formLinks) {
         formLinks.style.opacity = "1";
         formLinks.style.transform = "translateY(0)";
+    }
+});
+
+//makes it so on mobile it fades the logo upon scrolling enough
+const logo = document.querySelector(".eisenshoptextpng");
+
+window.addEventListener("scroll", () => {
+    const scrollY = window.scrollY;
+
+    const fadeStart = 0;
+    const fadeEnd = 60;
+
+    if (window.innerWidth <= 690) {
+        window.addEventListener("scroll", () => {
+            const scrollY = window.scrollY;
+            const fadeEnd = 60;
+
+            logo.style.opacity = Math.max(0, 1 - scrollY / fadeEnd);
+        });
     }
 });
