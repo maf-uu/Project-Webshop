@@ -7,21 +7,24 @@ html {
 
 body {
     font-family: system-ui, sans-serif;
-    max-width: 500px;
-    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
     padding: 1em;
     color: #363636;
 }
+
 h1 {
     text-align: center;
     font-size: 2em;
     margin-bottom: 1em;
     margin-top: 5em;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, monospace
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, monospace
 }
 
 form {
-    display: flex; 
+    display: flex;
     flex-direction: column;
     gap: 1em;
 }
@@ -29,6 +32,7 @@ form {
 label {
     display: inline-block;
     margin-bottom: 4px;
+    font-size: larger;
 }
 
 input[type="text"],
@@ -44,7 +48,7 @@ input[type="password"] {
 }
 
 input:focus {
-    box-shadow: 0 0 0 3px #ffcf11ab;
+    box-shadow: 0 0 0 3px #92bb86;
 }
 
 .input-error {
@@ -57,9 +61,9 @@ button {
     border-radius: 6px;
     background: #1f211f;
     font-size: 1em;
-    color:white;
+    color: white;
     cursor: pointer;
-    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
 button:hover {
@@ -81,57 +85,53 @@ li {
 }
 
 :root {
-  --clickhighlight-duration: 0.1s;
+    --clickhighlight-duration: 0.1s;
 }
 
 input,
 button,
 textarea {
-  transition:
-    background-color var(--clickhighlight-duration) linear,
-    border-color var(--clickhighlight-duration) linear,
-    color var(--clickhighlight-duration) linear,
-    box-shadow var(--clickhighlight-duration) linear,
-    transform var(--clickhighlight-duration) ease;
+    transition: background-color var(--clickhighlight-duration) linear, border-color var(--clickhighlight-duration) linear, color var(--clickhighlight-duration) linear, box-shadow var(--clickhighlight-duration) linear, transform var(--clickhighlight-duration) ease;
 }
 
-.form-box{
+.form-box {
     background: linear-gradient(to bottom right, #5d910f, #476f0b);
     padding: 2.5em;
     border-radius: 20px;
-    width: 420px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    width: 80%;
+    max-width: 420px;
+    min-width: 200px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     position: relative;
     z-index: 2;
 }
 
 .eisenshoptextpng {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 14.9%;
+    top: 15px;
+    left: 15px;
+    width: 273px;
     height: auto;
     z-index: 0;
     pointer-events: none;
-    padding: 25px;
 }
 
-.loginpassinput{
+.loginpassinput {
     border: none;
     border-radius: 6px;
     background: #efefef;
     font-size: 1em;
     outline: none;
-    display:flex;
+    display: flex;
     align-items: center;
 }
 
-.loginpassinput img{
+.loginpassinput img {
     width: 25px;
-    cursor:pointer;
+    cursor: pointer;
     padding: 10px;
     z-index: 0;
-    outline:none;
+    outline: none;
 }
 
 .loginpassinput:focus-within {
@@ -146,6 +146,7 @@ textarea {
     display: flex;
     justify-content: space-between;
     margin-top: 1em;
+    width: 100%;
 }
 
 .form-links p {
@@ -155,8 +156,27 @@ textarea {
     margin: 0;
 }
 
-.login-form, .form-links {
+.login-form,
+.form-links {
     opacity: 0;
     transform: translateY(10px);
     transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.loginContainer {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (max-width: 690px) {
+    h1 {
+        margin-top: 2em;
+    }
+    .eisenshoptextpng {
+        width: 120px;
+    }
 }
