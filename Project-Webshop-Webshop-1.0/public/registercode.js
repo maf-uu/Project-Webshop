@@ -105,7 +105,7 @@ window.addEventListener("scroll", () => {
     const scrollY = window.scrollY;
 
     const fadeStart = 0;
-    const fadeEnd = 60;
+    const fadeEnd = 50;
 
     if (window.innerWidth <= 690) {
         window.addEventListener("scroll", () => {
@@ -116,3 +116,4 @@ window.addEventListener("scroll", () => {
         });
     }
 });
+
