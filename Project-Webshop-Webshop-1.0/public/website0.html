@@ -49,15 +49,61 @@
 
     <section id="products" class="section productSection hidden">
 
-        <button onclick="handleUploadClick()" class="uploadButton">Upload Item</button>
-        <p>search</p>
+        <div class="marketplaceContainer">
 
-        <div class="product">
-            <h2>Our Products</h2>
-            <p>Happy browsing!</p>
-            <div id="itemsContainer"></div>
+            <div class=browsingContainer>
+
+                <div class="browsing">
+                    <h2>Search Items</h2>
+                    <label>Search:</label>
+                    <input type="text" placeholder="Search items" class="searchInput">
+                    <label>Category:</label>
+                    <select>
+                        <option>All Categories</option>
+                        <option value="AUTOMOTIVE">Automotive</option>
+                        <option value="BEAUTY">Beauty</option>
+                        <option value="BOOKS">Books</option>
+                        <option value="CLOTHING">Clothing</option>
+                        <option value="ELECTRONICS">Electronics</option>
+                        <option value="COLLECTIBLES">Collectibles</option>
+                        <option value="FURNITURE">Furniture</option>
+                        <option value="GARDENING">Gardening</option>
+                        <option value="JEWELRY">Jewelry</option>
+                        <option value="MUSIC">Music</option>
+                        <option value="PET_SUPPLIES">Pet Supplies</option>
+                        <option value="SPORTS">Sports</option>
+                        <option value="TOYS">Toys</option>
+                    </select>
+
+                    <label>Upload date:</label>
+                    <select>
+                        <option>Any Time</option>
+                        <option>Last 24 Hours</option>
+                        <option>Last 7 Days</option>
+                        <option>Last 30 Days</option>
+                    </select>
+                    <label>Upload date order:</label>
+                    <select>
+                        <option>Newest First</option>
+                        <option>Oldest First</option>
+                    </select>
+
+
+                    <label>Price range:</label>
+                    <input type="number" placeholder="Min" min="0">
+                    <input type="number" placeholder="Max" min="0">
+
+                    <div class="browseUpload">
+                        <h2>Upload an Item?</h2>
+
+                        <button onclick="handleUploadClick()" class="uploadButton">Upload Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="product">
+                <div id="itemsContainer" class="itemsContainer"></div>
+            </div>
         </div>
-
     </section>
 
     <section id="contact" class="section standardSection hidden">
