@@ -1,6 +1,6 @@
 const express = require("express");
 const multer = require("multer");
-const { uploadItem } = require('./itemcontrol.js');
+const { uploadItem, getitembyid, listitems } = require('./itemcontrol.js');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -27,6 +27,10 @@ router.delete("/main", (req, res) => {
     res.json({httpMethod: "delete"});
 });
 
+
 router.post("/upload", upload.single('file'), uploadItem);
+
+router.get("/", listitems);
+router.get("/:id", getitembyid);
 
 module.exports = router;
