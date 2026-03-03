@@ -42,7 +42,8 @@ model Items {
   createdBy String 
   price Int
   itemstatus ItemStatus @default(ELADO)
-  filePath String?
+  itemType ItemType
+  filePath String?  
 
   //Kötések
   owner User @relation("Owner", fields: [userid], references: [id], onDelete: Cascade)
@@ -53,4 +54,20 @@ enum ItemStatus {
   ELADO
   ELADVA
   NEM_ELERHETO
+}
+
+enum ItemType {
+  AUTOMOTIVE
+  BEAUTY
+  BOOKS
+  CLOTHING
+  ELECTRONICS
+  COLLECTIBLES
+  FURNITURE
+  GARDENING
+  JEWELRY
+  MUSIC
+  PET_SUPPLIES
+  SPORTS
+  TOYS
 }

@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const { config } = require("dotenv");
 const { connectDB, disconnectDB } = require("./config/db.js");
 
@@ -27,6 +28,11 @@ connectDB();
 
 const app = express()
 app.use(express.static('public'))
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/website0.html'));
+});
 
 //Body parse 
 app.use(express.json());
