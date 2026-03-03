@@ -1,5 +1,4 @@
-function showsection(name)
-{
+function showsection(name) {
     const sections = document.querySelectorAll('.section');
 
     sections.forEach(sec => {
@@ -14,7 +13,7 @@ function showsection(name)
 function displayUsername() {
     const cookies = document.cookie.split(';');
     let userName = 'Guest User';
-    
+
     for (let cookie of cookies) {
         const [name, value] = cookie.trim().split('=');
         if (name === 'userName') {
@@ -22,7 +21,7 @@ function displayUsername() {
             break;
         }
     }
-    
+
     const usernameElements = document.querySelectorAll('.usernameText')
 
     usernameElements.forEach(function(el) {
@@ -34,7 +33,7 @@ function displayUsername() {
 function handleAccountClick() {
     const cookies = document.cookie.split(';');
     let isLoggedIn = false;
-    
+
     for (let cookie of cookies) {
         const [name, value] = cookie.trim().split('=');
         if (name === 'userName') {
@@ -42,7 +41,7 @@ function handleAccountClick() {
             break;
         }
     }
-    
+
     if (isLoggedIn) {
         showsection('account');
     } else {
@@ -51,10 +50,10 @@ function handleAccountClick() {
     }
 }
 
-function handleUploadClick(){
+function handleUploadClick() {
     const cookies = document.cookie.split(';');
     let isLoggedIn = false;
-    
+
     for (let cookie of cookies) {
         const [name, value] = cookie.trim().split('=');
         if (name === 'userName') {
@@ -62,7 +61,7 @@ function handleUploadClick(){
             break;
         }
     }
-    
+
     if (isLoggedIn) {
         showsection('upload');
         attachUploadHandler();
@@ -73,6 +72,7 @@ function handleUploadClick(){
 }
 
 let _uploadHandlerAttached = false;
+
 function attachUploadHandler() {
     if (_uploadHandlerAttached) return;
     const form = document.getElementById('uploaditem');
@@ -111,18 +111,18 @@ async function loadAllItems() {
         }
 
         container.innerHTML = items.map((item) => {
-            const imagePath = item.filePath;
+                    const imagePath = item.filePath;
 
-            return `
+                    return `
                 <div class="uploaded-item">
-                    ${imagePath ? `<img src="${imagePath}" alt="${escapeHtml(item.name)}" style="max-width: 220px; max-height: 220px; object-fit: cover;">` : ''}
+                    ${imagePath ? `<img src="${imagePath}" alt="${escapeHtml(item.name)}" style="max-width: 300px; max-height: 220px; object-fit: cover;">` : ''}
                     <h3>${escapeHtml(item.name)}</h3>
-                    <p>${escapeHtml(item.description || '')}</p>
+                    <cite>${escapeHtml(item.description || '')}</cite>
                     <p><strong>Price:</strong> ${escapeHtml(item.price)} Ft</p>
                     <p><strong>Type:</strong> ${escapeHtml(item.itemType)}</p>
                     <p><strong>Status:</strong> ${escapeHtml(item.itemstatus)}</p>
-                    <button onclick="add_to_cart()">+</button>
-                    <button onclick="remove_from_cart()">−</button>
+                    <button onclick="add_to_cart()">Add</button>
+                    <button onclick="remove_from_cart()">Remove</button>
                 </div>
             `;
         }).join('');
@@ -384,4 +384,3 @@ window.onload = function() {
         history.replaceState(null, null, window.location.pathname);
     }
 };
-
