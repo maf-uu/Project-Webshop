@@ -18,7 +18,7 @@
         <div class="navwrapper">
             <div class="navbuttons">
                 <button onclick="showsection('about')">About</button>
-                <button onclick="showsection('products')">Products</button>
+                <button onclick="showsection('products')">Marketplace</button>
                 <button onclick="showsection('contact')">Contact</button>
             </div>
         </div>
@@ -49,10 +49,8 @@
 
     <section id="products" class="section productSection hidden">
 
-        <div class="productBrowse">
-            <button onclick="handleUploadClick()" class="uploadButton">Upload Item</button>
-            <p>search</p>
-        </div>
+        <button onclick="handleUploadClick()" class="uploadButton">Upload Item</button>
+        <p>search</p>
 
         <div class="product">
             <h2>Our Products</h2>
@@ -77,11 +75,10 @@
         <h2>Upload Item</h2>
         <div class="fileUploadForm">
             <form id="uploaditem" action="/items/upload" method="post" enctype="multipart/form-data">
+                <label for="name">Item name:</label>
                 <input type="text" id="name" name="name" placeholder="Item name" required>
 
-                <textarea type="text" id="description" name="description" placeholder="Description of item" required></textarea>
-
-                <label for="itemType">Type</label>
+                <label for="itemType">Item type:</label>
                 <select id="itemType" name="itemType" required>
                     <option value="AUTOMOTIVE">Automotive</option>
                     <option value="BEAUTY">Beauty</option>
@@ -98,11 +95,16 @@
                     <option value="TOYS">Toys</option>
                 </select>
 
+                <label for="description">Description:</label>
+                <textarea type="text" id="description" name="description" placeholder="Description of item" required></textarea>
+
+                <label for="price">Price:</label>
                 <div class="currencyDisplay">
                     <input type="number" id="price" name="price" placeholder="Price" min="0" max="10000000">
                     <span class="currency">Ft</span>
                 </div>
 
+                <label for="file">Image file:</label>
                 <input type="file" id="file" name="file" required>
 
                 <button type="submit" class="finishUploadButton">UPLOAD</button>
