@@ -403,11 +403,6 @@ li {
     transform: scale(1.03);
 }
 
-.productSection {
-    margin-top: 350px;
-    animation: fadeIn 0.6s ease;
-}
-
 .pageOverlay {
     position: fixed;
     inset: 0;
@@ -420,17 +415,6 @@ li {
 
 .pageOverlay.active {
     opacity: 1;
-}
-
-.uploadButton {
-    padding: 15px 30px;
-    border: none;
-    border-radius: 6px;
-    background: #363636;
-    font-size: 1em;
-    color: white;
-    cursor: pointer;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
 .fileUploadForm {
@@ -537,6 +521,143 @@ textarea:focus {
     z-index: 11;
     pointer-events: none;
     margin-right: 10px;
+}
+
+.marketplaceContainer {
+    display: flex;
+}
+
+.browsingContainer {
+    position: fixed;
+    top: 90px;
+    left: 0;
+    width: 240px;
+    height: calc(100vh - 90px);
+    background: rgba(40, 40, 40, 0.85);
+    backdrop-filter: blur(10px);
+    padding: 0px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    z-index: 5;
+}
+
+.browsing {
+    height: auto;
+    width: 200px;
+    text-align: center;
+    background: none;
+    box-shadow: none;
+    padding: 0px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+    color: white;
+}
+
+.browsingUpload {
+    height: auto;
+    width: 200px;
+    text-align: center;
+    background: none;
+    box-shadow: none;
+    padding: 0.5em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+    color: white;
+}
+
+.browseUpload h2 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.browsing h2 {
+    font-size: 1.1em;
+    margin-bottom: 12px;
+    padding-top: 1px;
+}
+
+.browsing label {
+    font-size: 1em;
+    margin-top: 10px;
+    color: #9be24f;
+}
+
+.browsing input,
+.browsing select {
+    font-size: 0.7em;
+    padding: 5px;
+}
+
+.browsing label {
+    font-size: 0.8em;
+}
+
+.uploadButton {
+    width: 140px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    background: #363636;
+    font-size: 0.9em;
+    color: white;
+    cursor: pointer;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    box-shadow: 0 0 0 2px #ffffff;
+}
+
+.uploadButton:hover {
+    box-shadow: none;
+}
+
+.product {
+    margin-top: 70px;
+    margin-left: 255px;
+    animation: fadeIn 0.6s ease;
+}
+
+.itemsContainer {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.uploaded-item p {
+    font-size: 0.9em;
+}
+
+.uploaded-item h3 {
+    font-size: 1em;
+}
+
+.uploaded-item cite {
+    font-size: 0.8em;
+    color: #616161;
+}
+
+.uploaded-item img {
+    width: 50%;
+    height: 50%;
+}
+
+.uploaded-item button {
+    font-size: 0.9em;
+    padding: 10px 12px;
+}
+
+.uploaded-item {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 10px;
+    padding-top: 15px;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    border-color: #000000;
+    border-width: 6px;
+    text-align: center;
 }
 
 @media (max-width: 900px) {
