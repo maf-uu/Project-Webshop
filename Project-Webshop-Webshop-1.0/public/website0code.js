@@ -81,6 +81,57 @@ function attachUploadHandler() {
     _uploadHandlerAttached = true;
 }
 
+function escapeHtml(value) {
+    if (value === null || value === undefined) return '';
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
+async function loadAllItems() {
+    const container = document.getElementById('itemsContainer');
+    if (!container) return;
+
+    container.innerHTML = '<p>Loading items...</p>';
+
+    try {
+        const response = await fetch('/items', { method: 'GET' });
+        if (!response.ok) {
+            throw new Error('Failed to load items');
+        }
+
+        const items = await response.json();
+
+        if (!Array.isArray(items) || items.length === 0) {
+            container.innerHTML = '<p>No uploaded items yet.</p>';
+            return;
+        }
+
+        container.innerHTML = items.map((item) => {
+            const imagePath = item.filePath;
+
+            return `
+                <div class="uploaded-item">
+                    ${imagePath ? `<img src="${imagePath}" alt="${escapeHtml(item.name)}" style="max-width: 220px; max-height: 220px; object-fit: cover;">` : ''}
+                    <h3>${escapeHtml(item.name)}</h3>
+                    <p>${escapeHtml(item.description || '')}</p>
+                    <p><strong>Price:</strong> ${escapeHtml(item.price)} Ft</p>
+                    <p><strong>Type:</strong> ${escapeHtml(item.itemType)}</p>
+                    <p><strong>Status:</strong> ${escapeHtml(item.itemstatus)}</p>
+                    <button onclick="add_to_cart()">+</button>
+                    <button onclick="remove_from_cart()">−</button>
+                </div>
+            `;
+        }).join('');
+    } catch (error) {
+        console.error('Failed to fetch items:', error);
+        container.innerHTML = '<p>Failed to load items.</p>';
+    }
+}
+
 async function submitUpload(event) {
     event.preventDefault();
     const form = event.target;
@@ -109,6 +160,13 @@ async function submitUpload(event) {
         fd.set('userid', userid);
         fd.set('createdBy', userid);
 
+        // ensure itemType was selected (should be guaranteed by <select required>)
+        if (!fd.get('itemType')) {
+            alert('Please select a type for the item.');
+            if (btn) btn.disabled = false;
+            return;
+        }
+
         // post to /items/upload
         const resp = await fetch('/items/upload', {
             method: 'POST',
@@ -126,6 +184,7 @@ async function submitUpload(event) {
 
         alert('Item uploaded successfully!');
         form.reset();
+        await loadAllItems();
         showsection('products');
     } catch (err) {
         console.error('Upload error:', err);
@@ -230,6 +289,7 @@ function shadeOverlayRemove() {
 // Call displayUsername when the page loads as well as user data
 document.addEventListener('DOMContentLoaded', displayUsername);
 document.addEventListener("DOMContentLoaded", loadUserData);
+document.addEventListener('DOMContentLoaded', loadAllItems);
 
 let cartcount = 0;
 

@@ -56,10 +56,8 @@
 
         <div class="product">
             <h2>Our Products</h2>
-            <p>Happy browsing! This is a placeholder text.</p>
-            <h3>Testing Item A</h3>
-            <button onclick="add_to_cart()">+</button>
-            <button onclick="remove_from_cart()">−</button>
+            <p>Happy browsing!</p>
+            <div id="itemsContainer"></div>
         </div>
 
     </section>
@@ -82,6 +80,23 @@
                 <input type="text" id="name" name="name" placeholder="Item name" required>
 
                 <textarea type="text" id="description" name="description" placeholder="Description of item" required></textarea>
+
+                <label for="itemType">Type</label>
+                <select id="itemType" name="itemType" required>
+                    <option value="AUTOMOTIVE">Automotive</option>
+                    <option value="BEAUTY">Beauty</option>
+                    <option value="BOOKS">Books</option>
+                    <option value="CLOTHING">Clothing</option>
+                    <option value="ELECTRONICS">Electronics</option>
+                    <option value="COLLECTIBLES">Collectibles</option>
+                    <option value="FURNITURE">Furniture</option>
+                    <option value="GARDENING">Gardening</option>
+                    <option value="JEWELRY">Jewelry</option>
+                    <option value="MUSIC">Music</option>
+                    <option value="PET_SUPPLIES">Pet Supplies</option>
+                    <option value="SPORTS">Sports</option>
+                    <option value="TOYS">Toys</option>
+                </select>
 
                 <div class="currencyDisplay">
                     <input type="number" id="price" name="price" placeholder="Price" min="0" max="10000000">
