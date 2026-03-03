@@ -444,7 +444,6 @@ li {
     backdrop-filter: blur(6px);
     padding: 1.5em;
     position: relative;
-    z-index: 2;
 }
 
 .finishUploadButton {
@@ -460,7 +459,6 @@ form {
 input[type="text"],
 input[type="number"],
 input[type="file"] {
-    margin-top: 30px;
     width: 100%;
     padding: 10px;
     border: none;
@@ -471,8 +469,26 @@ input[type="file"] {
     align-content: center;
 }
 
-#description {
+select {
+    width: 50%;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background: #efefef;
+    font-size: 1em;
+    outline: none;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 4px;
+    font-size: larger;
+    text-align: left;
     margin-top: 30px;
+    color: #8ecf2c;
+}
+
+#description {
     width: 100%;
     height: 100px;
     padding: 10px;
@@ -496,7 +512,7 @@ input[type="file"] {
     position: absolute;
     right: 10px;
     top: 50%;
-    transform: translateY(24%);
+    transform: translateY(-50%);
     color: #777;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif, bolder;
     letter-spacing: 1.5px;
@@ -595,7 +611,7 @@ textarea:focus {
         padding: 16px 20px;
         border: none;
         border-radius: 6px;
-        font-size: 1.2em;
+        font-size: 1em;
     }
     .topbar {
         padding: 0;
