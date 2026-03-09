@@ -39,7 +39,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 
-//API routes
+//api routeok
 app.use("/items", itemroutes) ;
 app.use("/auth", authroutes);
 
@@ -60,13 +60,13 @@ process.on("unhandledRejection", (err) => {
         process.exit(1);
     });
 });
-//Uncaught exception
+//uncaught exception
 process.on("uncaughtException", async (err) => {
     console.error("Uncaught Exception:", err);
     await disconnectDB();
     process.exit(1);
 });
-//Shutdown
+//kikapcs
 process.on("SIGTERM", async () => {
     console.log("SIGTERM megkapva, shutting down rendesen");
     server.close(async () => {
@@ -75,7 +75,7 @@ process.on("SIGTERM", async () => {
     });
 });
 
-//upload item
+//tárgy feltölt
 app.post('/api/upload',upload.single('file'), (req, res) => {
     res.json(req.file);
 });
@@ -86,3 +86,4 @@ app.post('/api/upload',upload.single('file'), (req, res) => {
 //AUTH (login, sign up)
 //ITEMS (items uploaded)
 //USER (profile) 
+
