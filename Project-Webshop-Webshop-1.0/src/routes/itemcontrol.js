@@ -4,12 +4,12 @@ const uploadItem = async (req, res) => {
     try {
         const { name, description, price, userid, createdBy, itemType } = req.body;
 
-        // basic validation – itemType is required by the Prisma schema
+        // validáció
         if (!name || !price || !userid || !createdBy || !itemType) {
             return res.status(400).json({ error: "Név, ár, userid, createdBy és itemType mezők kötelezőek." });
         }
 
-        // item create
+        // tárgy létrehozása
         const item = await prisma.items.create({
             data: {
                 name,
@@ -22,7 +22,7 @@ const uploadItem = async (req, res) => {
             },
         });
 
-        // success response
+        // sikeres response
         const response = {
             status: "success",
             message: "Elem sikeresen feltöltve.",
@@ -59,3 +59,4 @@ const listitems = async (req, res) => {
 };
 
 module.exports = { uploadItem, getitembyid, listitems };
+
