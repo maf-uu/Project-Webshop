@@ -3,7 +3,7 @@ const bcrypt = require ("bcryptjs");
 const jwt = require('jsonwebtoken');
 const generateToken = require ('../utils/generateToken.js')
 const register = async(req, res) => {
-    // accept either `name` (full name) or `username` (form has both sometimes)
+    // befogad vagy "name" vagy "username"-et
     const {name: fullname, username, email, password, phone, gender} = req.body;
     const name = fullname || username || "";
 
@@ -16,11 +16,11 @@ const register = async(req, res) => {
         return res.status(400).json({error: "Létezik már felhasználó ezzel az e-mail címmel."});
     }
 
-    //psw hash
+    //jelszó hash
     const salt = await bcrypt.genSalt(10)
     const hashedpassword = await bcrypt.hash(password, salt);
 
-    //create user
+    //felhasználó létrehozás
     const user = await prisma.user.create({ 
         data: {
             name,
@@ -79,14 +79,14 @@ const userDelete = async (req, res) => {
         const userId = decoded && decoded.id;
         if (!userId) return res.status(400).json({ error: 'Invalid token payload' });
 
-        // ensure user exists
+        // biztos létezik
         const user = await prisma.user.findUnique({ where: { id: userId } });
         if (!user) return res.status(404).json({ error: 'User not found' });
 
-        // fetus deletus
+        // felhasználó törlés
         await prisma.user.delete({ where: { id: userId } });
 
-        // cookie clear kingdom
+        // cookiek tisztítása
         if (res.clearCookie) {
             res.clearCookie('jwt');
             res.clearCookie('userName');
@@ -105,7 +105,7 @@ const userDelete = async (req, res) => {
 const login = async (req, res) => {
     const {email, password} = req.body
 
-    //check if exist
+    //létezike
     const userexists = await prisma.user.findUnique({
         where: {email: email},
     });
@@ -115,7 +115,7 @@ if (!userexists) {
     .status(401).json({error: "Hibás email vagy jelszó!"});
     }
 
-    //verify psw
+    //jelszó verify
     const validpass = await bcrypt.compare(password, userexists.password)
 
     if (!validpass)
@@ -149,7 +149,7 @@ const logout = async (req, res) => {
 
 module.exports = { login, register, logout, userDelete, deleteAccount: userDelete }
 
-//return info
+//info visszaadása
 const getCurrentUser = async (req, res) => {
     try {
         const getToken = () => {
@@ -200,5 +200,6 @@ const getCurrentUser = async (req, res) => {
         return res.status(500).json({ error: 'Server error' });
     }
 };
+
 
 module.exports.getCurrentUser = getCurrentUser;
