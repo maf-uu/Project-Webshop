@@ -44,7 +44,140 @@ async function loadUserData() {
 
 document.addEventListener("DOMContentLoaded", loadUserData);
 
-//Using the CheckoutReturn button in Checkout brings user back to website0.html and shows the cart section
+function escapeHtml(value) {
+    if (value === null || value === undefined) return '';
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
+async function loadCheckoutCartItems() {
+    const itemsContainer = document.getElementById('checkoutCartItems');
+    const totalContainer = document.getElementById('checkoutCartTotal');
+
+    if (!itemsContainer || !totalContainer) return;
+
+    itemsContainer.innerHTML = '<p>Loading cart...</p>';
+    totalContainer.textContent = '';
+
+    try {
+        const cartResp = await fetch('/items/cart', {
+            method: 'GET',
+            credentials: 'include'
+        });
+
+        if (!cartResp.ok) {
+            itemsContainer.innerHTML = '<p>Could not load cart.</p>';
+            return;
+        }
+
+        const cartData = await cartResp.json();
+        const cartItems = Array.isArray(cartData.cartItems) ? cartData.cartItems : [];
+
+        if (cartItems.length === 0) {
+            itemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+            return;
+        }
+
+        const itemsResp = await fetch('/items', { method: 'GET' });
+        if (!itemsResp.ok) {
+            itemsContainer.innerHTML = '<p>Could not load item details.</p>';
+            return;
+        }
+
+        const allItems = await itemsResp.json();
+        const itemsById = new Map(allItems.map((item) => [String(item.id), item]));
+
+        const quantityById = {};
+        for (const id of cartItems) {
+            const key = String(id);
+            quantityById[key] = (quantityById[key] || 0) + 1;
+        }
+
+        let totalPrice = 0;
+        const rowsHtml = Object.entries(quantityById).map(([id, qty]) => {
+            const item = itemsById.get(id);
+            if (!item) {
+                return `<div class="checkoutCartItem"><p>Unknown item (${escapeHtml(id)}) x ${qty}</p></div>`;
+            }
+
+            const unitPrice = Number(item.price) || 0;
+            const lineTotal = unitPrice * qty;
+            totalPrice += lineTotal;
+
+            return `
+                <div class="checkoutCartItem">
+                    <p><strong>${escapeHtml(item.name)}</strong> x ${qty}</p>
+                    <p>${escapeHtml(unitPrice)} Ft / db</p>
+                    <p><strong>Subtotal:</strong> ${escapeHtml(lineTotal)} Ft</p>
+                </div>
+            `;
+        }).join('');
+
+        itemsContainer.innerHTML = rowsHtml;
+        totalContainer.innerHTML = `<strong>Total:</strong> ${escapeHtml(totalPrice)} Ft`;
+    } catch (error) {
+        console.error('Failed to render checkout cart:', error);
+        itemsContainer.innerHTML = '<p>Could not load cart.</p>';
+        totalContainer.textContent = '';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', loadCheckoutCartItems);
+
+async function completeCheckout(event) {
+    event.preventDefault();
+
+    const form = event.target;
+    const payButton = form.querySelector('.payNowButton');
+
+    if (payButton) {
+        payButton.disabled = true;
+    }
+
+    try {
+        const response = await fetch('/items/cart/checkout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include'
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+            const errorMessage = data && data.error ? data.error : 'Checkout failed.';
+            alert(errorMessage);
+            return;
+        }
+
+        const deletedCount = Number.isInteger(data.deletedCount) ? data.deletedCount : 0;
+        alert(`Checkout complete.`);
+
+        await loadCheckoutCartItems();
+        window.location.href = '/website0.html#cart';
+    } catch (error) {
+        console.error('Checkout request failed:', error);
+        alert('Checkout failed. Please try again.');
+    } finally {
+        if (payButton) {
+            payButton.disabled = false;
+        }
+    }
+}
+
+function bindCheckoutForm() {
+    const purchaseForm = document.getElementById('purchase');
+    if (!purchaseForm) return;
+
+    purchaseForm.addEventListener('submit', completeCheckout);
+}
+
+document.addEventListener('DOMContentLoaded', bindCheckoutForm);
+
+//Using the CheckoutReturn button in Checkout brings user back to #products and shows the products section
 function CheckoutReturn() {
-    window.location.href = "/website0.html#cart";
+    window.location.href = "/#products";
 }
