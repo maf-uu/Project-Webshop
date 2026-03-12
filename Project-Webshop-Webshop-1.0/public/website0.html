@@ -30,7 +30,7 @@
             <img src="accountdetails.png" class="accountdetails" onclick="handleAccountClick()">
 
 
-            <img src="cartdetails.png" class="cartdetails" onclick="showsection('cart')">
+            <img src="cartdetails.png" class="cartdetails" onclick="openCartPopup()">
             <div id="cartbadge" class="cartbadge">1</div>
         </div>
     </div>
@@ -56,10 +56,10 @@
                 <div class="browsing">
                     <h2>Search Items</h2>
                     <label>Search:</label>
-                    <input type="text" placeholder="Search items" class="searchInput">
+                    <input type="text" placeholder="Search items" class="searchInput" id="marketSearchInput">
                     <label>Category:</label>
-                    <select>
-                        <option>All Categories</option>
+                    <select id="marketCategorySelect">
+                        <option value="">All Categories</option>
                         <option value="AUTOMOTIVE">Automotive</option>
                         <option value="BEAUTY">Beauty</option>
                         <option value="BOOKS">Books</option>
@@ -76,22 +76,22 @@
                     </select>
 
                     <label>Upload date:</label>
-                    <select>
-                        <option>Any Time</option>
-                        <option>Last 24 Hours</option>
-                        <option>Last 7 Days</option>
-                        <option>Last 30 Days</option>
+                    <select id="marketUploadDateSelect">
+                        <option value="any">Any Time</option>
+                        <option value="24h">Last 24 Hours</option>
+                        <option value="7d">Last 7 Days</option>
+                        <option value="30d">Last 30 Days</option>
                     </select>
                     <label>Upload date order:</label>
-                    <select>
-                        <option>Newest First</option>
-                        <option>Oldest First</option>
+                    <select id="marketDateOrderSelect">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
                     </select>
 
 
                     <label>Price range:</label>
-                    <input type="number" placeholder="Min" min="0">
-                    <input type="number" placeholder="Max" min="0">
+                    <input type="number" placeholder="Min" min="0" id="marketPriceMin">
+                    <input type="number" placeholder="Max" min="0" id="marketPriceMax">
 
                     <div class="browseUpload">
                         <h2>Upload an Item?</h2>
@@ -107,8 +107,26 @@
     </section>
 
     <section id="contact" class="section standardSection hidden">
+
         <h2>Contact Us!</h2>
-        <p>Ask us any questions you may have, we won't answer. This is a placeholder text.</p>
+        <p>Ask us any questions you may have, we will answser you in less than two business days.</p>
+        <div class="contactForm">
+            <form id="contactEisen" action="" method="post" enctype="multipart/form-data">
+                <label for="itemType">Contact type:</label>
+                <select id="contactType" name="contactType" required>
+                    <option value="COMPLAINT">Complaint</option>
+                    <option value="COMMENT">Comment</option>
+                    <option value="INQUIRY">Inquiry</option>
+                    <option value="SUPPORT">Support</option>
+                </select>
+
+                <label for="description">Your message:</label>
+                <textarea type="text" id="description" name="description" placeholder="Your message goes here." required></textarea>
+
+                <button type="submit" class="finishUploadButton">SUBMIT</button>
+            </form>
+        </div>
+
     </section>
 
     <section id="cart" class="section standardSection hidden">
@@ -161,7 +179,7 @@
 
     <section id="account" class="section standardSection hidden">
         <h2>Welcome, <span class="usernameText">Guest User</span></h2>
-        <p>Here you can find your information! This is a placeholder text.</p>
+        <p>Here you can find your information! You may logout or delete your account here.</p>
         <div class="accountInfo">
             <ul>
                 <li><span class="accountInfoLabel">Name: </span><span class="nameText">Full Name</span></li>
@@ -183,10 +201,12 @@
     <div id="cart-popup" class="cart-popup">
         <button class="close-popup">✖</button>
 
-        <p><strong>Item added to your cart</strong></p>
+        <p id="cartPopupTitle"><strong>Item added to your cart</strong></p>
+        <div id="cartPopupItems" class="cart-popup-items"></div>
+        <p id="cartPopupTotal" class="cart-popup-total"></p>
 
         <div class="popup-actions">
-            <button onclick="openCartFromPopup()">View cart</button>
+            <button id="popupViewCartBtn" onclick="openCartFromPopup()">View cart</button>
             <button onclick="goToCheckout()">Checkout</button>
         </div>
 
