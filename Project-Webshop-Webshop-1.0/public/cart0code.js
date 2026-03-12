@@ -177,7 +177,7 @@ function bindCheckoutForm() {
 
 document.addEventListener('DOMContentLoaded', bindCheckoutForm);
 
-//Using the CheckoutReturn button in Checkout brings user back to #products and shows the products section
+//A Pénztárban a CheckoutReturn gomb használatával a felhasználó visszatér a #products oldalra, és megjelenek a termékek.
 function CheckoutReturn() {
     window.location.href = "/#products";
 }
