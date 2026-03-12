@@ -7,6 +7,10 @@ function showsection(name) {
 
     const active = document.getElementById(name);
     active.classList.remove("hidden");
+
+    if (name === 'cart') {
+        loadCartItemsView();
+    }
 }
 
 // Display username everywhere on page load
@@ -91,45 +95,105 @@ function escapeHtml(value) {
         .replace(/'/g, '&#039;');
 }
 
-async function loadAllItems() {
+let marketplaceFiltersBound = false;
+
+function renderMarketplaceItems(items) {
     const container = document.getElementById('itemsContainer');
     if (!container) return;
+
+    if (!Array.isArray(items) || items.length === 0) {
+        container.innerHTML = '<p>No items match your filters.</p>';
+        return;
+    }
+
+    container.innerHTML = items.map((item) => {
+                const imagePath = item.filePath;
+                const encodedItemId = JSON.stringify(item.id);
+
+                return `
+            <div class="uploaded-item">
+                ${imagePath ? `<div class="imageBox"><img src="${imagePath}" alt="${escapeHtml(item.name)}"></div>` : ''}
+                <h3>${escapeHtml(item.name)}</h3>
+                <cite>${escapeHtml(item.description || '')}</cite>
+                <p><strong>Price:</strong> ${escapeHtml(item.price)} Ft</p>
+                <p><strong>Type:</strong> ${escapeHtml(item.itemType)}</p>
+                <p><strong>Status:</strong> ${escapeHtml(item.itemstatus)}</p>
+                <button onclick='add_to_cart(${encodedItemId})'>Add</button>
+                <button onclick='remove_from_cart(${encodedItemId})'>Remove</button>
+            </div>
+        `;
+    }).join('');
+}
+
+function getMarketplaceFilterState() {
+    return {
+        searchText: (document.getElementById('marketSearchInput')?.value || '').trim().toLowerCase(),
+        category: document.getElementById('marketCategorySelect')?.value || '',
+        uploadDate: document.getElementById('marketUploadDateSelect')?.value || 'any',
+        dateOrder: document.getElementById('marketDateOrderSelect')?.value || 'newest',
+        minPrice: document.getElementById('marketPriceMin')?.value || '',
+        maxPrice: document.getElementById('marketPriceMax')?.value || ''
+    };
+}
+
+async function applyMarketplaceFilters() {
+    const container = document.getElementById('itemsContainer');
+    if (!container) return;
+
+    const state = getMarketplaceFilterState();
+    const params = new URLSearchParams();
+
+    if (state.searchText) params.set('search', state.searchText);
+    if (state.category) params.set('itemType', state.category);
+    if (state.uploadDate && state.uploadDate !== 'any') params.set('uploadDate', state.uploadDate);
+    if (state.dateOrder) params.set('dateOrder', state.dateOrder);
+    if (state.minPrice !== '') params.set('minPrice', state.minPrice);
+    if (state.maxPrice !== '') params.set('maxPrice', state.maxPrice);
 
     container.innerHTML = '<p>Loading items...</p>';
 
     try {
-        const response = await fetch('/items', { method: 'GET' });
+        const response = await fetch(`/items?${params.toString()}`, { method: 'GET' });
         if (!response.ok) {
-            throw new Error('Failed to load items');
+            throw new Error('Failed to load filtered items');
         }
 
         const items = await response.json();
-
-        if (!Array.isArray(items) || items.length === 0) {
-            container.innerHTML = '<p>No uploaded items yet.</p>';
-            return;
-        }
-
-        container.innerHTML = items.map((item) => {
-                    const imagePath = item.filePath;
-
-                    return `
-                <div class="uploaded-item">
-                    ${imagePath ? `<img src="${imagePath}" alt="${escapeHtml(item.name)}" style="max-width: 300px; max-height: 220px; object-fit: cover;">` : ''}
-                    <h3>${escapeHtml(item.name)}</h3>
-                    <cite>${escapeHtml(item.description || '')}</cite>
-                    <p><strong>Price:</strong> ${escapeHtml(item.price)} Ft</p>
-                    <p><strong>Type:</strong> ${escapeHtml(item.itemType)}</p>
-                    <p><strong>Status:</strong> ${escapeHtml(item.itemstatus)}</p>
-                    <button onclick="add_to_cart()">Add</button>
-                    <button onclick="remove_from_cart()">Remove</button>
-                </div>
-            `;
-        }).join('');
+        renderMarketplaceItems(items);
     } catch (error) {
-        console.error('Failed to fetch items:', error);
+        console.error('Failed to fetch filtered items:', error);
         container.innerHTML = '<p>Failed to load items.</p>';
     }
+}
+
+function bindMarketplaceFilters() {
+    if (marketplaceFiltersBound) return;
+
+    const controls = [
+        document.getElementById('marketSearchInput'),
+        document.getElementById('marketCategorySelect'),
+        document.getElementById('marketUploadDateSelect'),
+        document.getElementById('marketDateOrderSelect'),
+        document.getElementById('marketPriceMin'),
+        document.getElementById('marketPriceMax')
+    ].filter(Boolean);
+
+    controls.forEach((control) => {
+        const eventName = control.tagName === 'INPUT' ? 'input' : 'change';
+        control.addEventListener(eventName, () => {
+            applyMarketplaceFilters();
+        });
+    });
+
+    marketplaceFiltersBound = true;
+}
+
+async function loadAllItems() {
+    const container = document.getElementById('itemsContainer');
+    if (!container) return;
+
+    bindMarketplaceFilters();
+    await applyMarketplaceFilters();
 }
 
 async function submitUpload(event) {
@@ -290,8 +354,98 @@ function shadeOverlayRemove() {
 document.addEventListener('DOMContentLoaded', displayUsername);
 document.addEventListener("DOMContentLoaded", loadUserData);
 document.addEventListener('DOMContentLoaded', loadAllItems);
+document.addEventListener('DOMContentLoaded', syncCartCountFromServer);
+document.addEventListener('DOMContentLoaded', loadCartItemsView);
 
 let cartcount = 0;
+
+function ensureCartListContainer() {
+    const cartSection = document.getElementById('cart');
+    if (!cartSection) return null;
+
+    let container = document.getElementById('cartItemsList');
+    if (container) return container;
+
+    container = document.createElement('div');
+    container.id = 'cartItemsList';
+    cartSection.appendChild(container);
+    return container;
+}
+
+async function loadCartItemsView() {
+    const container = ensureCartListContainer();
+    if (!container) return;
+
+    container.innerHTML = '<p>Loading cart...</p>';
+
+    try {
+        const cartResp = await fetch('/items/cart', {
+            method: 'GET',
+            credentials: 'include'
+        });
+
+        if (!cartResp.ok) {
+            container.innerHTML = '<p>Could not load cart.</p>';
+            return;
+        }
+
+        const cartData = await cartResp.json();
+        const cartItems = Array.isArray(cartData.cartItems) ? cartData.cartItems : [];
+
+        if (cartItems.length === 0) {
+            container.innerHTML = '<p>Your cart is empty.</p>';
+            return;
+        }
+
+        const itemsResp = await fetch('/items', { method: 'GET' });
+        if (!itemsResp.ok) {
+            container.innerHTML = '<p>Could not load item details.</p>';
+            return;
+        }
+
+        const allItems = await itemsResp.json();
+        const itemsById = new Map(allItems.map((item) => [String(item.id), item]));
+
+        const quantityById = {};
+        for (const id of cartItems) {
+            const key = String(id);
+            quantityById[key] = (quantityById[key] || 0) + 1;
+        }
+
+        const lines = Object.entries(quantityById);
+        let totalPrice = 0;
+
+        const rowsHtml = lines.map(([id, qty]) => {
+            const item = itemsById.get(id);
+            if (!item) {
+                return `<div class="cart-item-row"><p>Unknown item (${escapeHtml(id)}) x ${qty}</p></div>`;
+            }
+
+            const unitPrice = Number(item.price) || 0;
+            const lineTotal = unitPrice * qty;
+            totalPrice += lineTotal;
+
+            return `
+                <div class="cart-item-row">
+                    <p><strong>${escapeHtml(item.name)}</strong> x ${qty}</p>
+                    <p>${escapeHtml(unitPrice)} Ft / db</p>
+                    <p><strong>Subtotal:</strong> ${escapeHtml(lineTotal)} Ft</p>
+                </div>
+            `;
+        }).join('');
+
+        container.innerHTML = `
+            <div class="cart-items-list">
+                ${rowsHtml}
+                <hr>
+                <p><strong>Total:</strong> ${escapeHtml(totalPrice)} Ft</p>
+            </div>
+        `;
+    } catch (error) {
+        console.error('Could not render cart:', error);
+        container.innerHTML = '<p>Could not load cart.</p>';
+    }
+}
 
 function updatecartbadge(){
     const badge = document.getElementById("cartbadge");
@@ -316,17 +470,67 @@ function updatecartbadge(){
     }
 }
 
-function add_to_cart(){
-    cartcount++;
-    updatecartbadge();
-    showCartPopup();
+async function syncCartCountFromServer() {
+    try {
+        const resp = await fetch('/items/cart', {
+            method: 'GET',
+            credentials: 'include'
+        });
+
+        if (!resp.ok) return;
+
+        const data = await resp.json();
+        cartcount = Number.isInteger(data.count) ? data.count : 0;
+        updatecartbadge();
+    } catch (error) {
+        console.error('Could not sync cart count:', error);
+    }
 }
 
-function remove_from_cart(){
-    if (cartcount > 0) 
-    {
-        cartcount--;
+async function add_to_cart(itemId){
+    try {
+        const resp = await fetch('/items/cart/add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ itemId })
+        });
+
+        if (!resp.ok) return;
+
+        const data = await resp.json();
+
+        if (data.alreadyInCart) {
+            alert('This item is already in your cart.');
+            return;
+        }
+
+        cartcount = Number.isInteger(data.count) ? data.count : cartcount + 1;
         updatecartbadge();
+        await loadCartItemsView();
+        showCartPopup();
+    } catch (error) {
+        console.error('Could not add item to cart:', error);
+    }
+}
+
+async function remove_from_cart(itemId){
+    try {
+        const resp = await fetch('/items/cart/remove', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ itemId })
+        });
+
+        if (!resp.ok) return;
+
+        const data = await resp.json();
+        cartcount = Number.isInteger(data.count) ? data.count : Math.max(0, cartcount - 1);
+        updatecartbadge();
+        await loadCartItemsView();
+    } catch (error) {
+        console.error('Could not remove item from cart:', error);
     }
 }
 
@@ -334,9 +538,115 @@ function goToCheckout() {
     window.location.href = "cart0.html";
 }
 
+async function fetchCartDisplayModel() {
+    const cartResp = await fetch('/items/cart', {
+        method: 'GET',
+        credentials: 'include'
+    });
+
+    if (!cartResp.ok) {
+        throw new Error('Could not load cart');
+    }
+
+    const cartData = await cartResp.json();
+    const cartItems = Array.isArray(cartData.cartItems) ? cartData.cartItems : [];
+
+    if (cartItems.length === 0) {
+        return {
+            rowsHtml: '<p>Your cart is empty.</p>',
+            totalPrice: 0,
+            hasItems: false
+        };
+    }
+
+    const itemsResp = await fetch('/items', { method: 'GET' });
+    if (!itemsResp.ok) {
+        throw new Error('Could not load item details');
+    }
+
+    const allItems = await itemsResp.json();
+    const itemsById = new Map(allItems.map((item) => [String(item.id), item]));
+
+    const quantityById = {};
+    for (const id of cartItems) {
+        const key = String(id);
+        quantityById[key] = (quantityById[key] || 0) + 1;
+    }
+
+    const lines = Object.entries(quantityById);
+    let totalPrice = 0;
+
+    const rowsHtml = lines.map(([id, qty]) => {
+        const item = itemsById.get(id);
+        if (!item) {
+            return `<div class="cart-popup-item"><p>Unknown item (${escapeHtml(id)}) x ${qty}</p></div>`;
+        }
+
+        const unitPrice = Number(item.price) || 0;
+        const lineTotal = unitPrice * qty;
+        totalPrice += lineTotal;
+
+        return `
+            <div class="cart-popup-item">
+                <p><strong>${escapeHtml(item.name)}</strong> x ${qty}</p>
+                <p>${escapeHtml(unitPrice)} Ft / db</p>
+                <p><strong>Subtotal:</strong> ${escapeHtml(lineTotal)} Ft</p>
+            </div>
+        `;
+    }).join('');
+
+    return {
+        rowsHtml,
+        totalPrice,
+        hasItems: true
+    };
+}
+
+function setCartPopupMode(mode) {
+    const title = document.getElementById('cartPopupTitle');
+    const viewCartBtn = document.getElementById('popupViewCartBtn');
+    const continueLink = document.querySelector('.continue-shopping');
+
+    if (!title || !viewCartBtn || !continueLink) return;
+
+    if (mode === 'cart') {
+        title.innerHTML = '<strong>Your cart</strong>';
+        viewCartBtn.classList.remove('hidden');
+        continueLink.classList.add('hidden');
+        return;
+    }
+
+    title.innerHTML = '<strong>Item added to your cart</strong>';
+    viewCartBtn.classList.remove('hidden');
+    continueLink.classList.remove('hidden');
+}
+
+async function renderCartPopupItems() {
+    const itemsEl = document.getElementById('cartPopupItems');
+    const totalEl = document.getElementById('cartPopupTotal');
+    if (!itemsEl || !totalEl) return;
+
+    itemsEl.innerHTML = '<p>Loading cart...</p>';
+    totalEl.innerHTML = '';
+
+    try {
+        const model = await fetchCartDisplayModel();
+        itemsEl.innerHTML = model.rowsHtml;
+        totalEl.innerHTML = model.hasItems
+            ? `<strong>Total:</strong> ${escapeHtml(model.totalPrice)} Ft`
+            : '';
+    } catch (error) {
+        console.error('Could not render popup cart:', error);
+        itemsEl.innerHTML = '<p>Could not load cart.</p>';
+        totalEl.innerHTML = '';
+    }
+}
+
 function showCartPopup() {
+    setCartPopupMode('added');
     const popup = document.getElementById("cart-popup");
     popup.classList.add("show");
+    renderCartPopupItems();
 }
 
 function hideCartPopup() {
@@ -351,8 +661,9 @@ document.addEventListener("click", (e) => {
 
     const clickedInsidePopup = popup.contains(e.target);
     const clickedAddButton = e.target.closest(".product button");
+    const clickedCartIcon = e.target.closest('.cartdetails');
 
-    if (!clickedInsidePopup && !clickedAddButton) {
+    if (!clickedInsidePopup && !clickedAddButton && !clickedCartIcon) {
         hideCartPopup();
     }
 });
@@ -370,17 +681,23 @@ document.querySelector(".continue-shopping").addEventListener("click", () =>
 });
 
 function openCartFromPopup() {
-    const popup = document.getElementById("cart-popup");
-    popup.classList.remove("show");
+    hideCartPopup();
     showsection('cart');
 }
 
-//Using the CheckoutReturn button in Checkout brings user back to website0.html and shows the cart section
-window.onload = function() {
-    if (window.location.hash === "#cart") {
-        showsection("cart");
+function openCartPopup() {
+    const popup = document.getElementById("cart-popup");
+    setCartPopupMode('cart');
+    popup.classList.add("show");
+    renderCartPopupItems();
+}
 
-        //Removes #cart hash so upon reload of page, it ends user back to regular frontpage state
+//A Pénztárban a CheckoutReturn gomb használatával a felhasználó visszatér a #products oldalra, és megjelenek a termékek.
+window.onload = function() {
+    if (window.location.hash === "#products") {
+        showsection("products");
+
+        //Eltávolítja a #products hash-t, így az oldal újratöltésekor a felhasználó visszatér a products oldalra.
         history.replaceState(null, null, window.location.pathname);
     }
 };
