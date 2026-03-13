@@ -167,12 +167,12 @@ textarea {
     min-width: 20px;
     height: auto;
     text-align: center;
-    display: none;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     pointer-events: none;
+    display: none;
 }
 
 .accountdetails:hover {
@@ -955,5 +955,40 @@ body.no-scroll {
     .cartbadge {
         top: 5px;
         right: -4px;
+    }
+}
+
+@media (max-width: 900px) and (orientation: landscape) {
+    .browsingContainer {
+        visibility: hidden;
+        pointer-events: none;
+        position: fixed;
+        left: 0;
+        top: 90px;
+        width: 101%;
+        height: calc(100vh - 90px);
+        background: rgba(40, 40, 40, 0.95);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9;
+        overflow-y: auto;
+    }
+    .browsing {
+        width: 60%;
+        padding-top: 260px;
+        padding-bottom: 25px;
+    }
+    .searchfilterpng {
+        visibility: visible;
+        pointer-events: auto;
+    }
+    .product {
+        margin-left: 25px;
+        width: calc(100% - 50px);
+    }
+    .itemsContainer {
+        margin-top: 30px;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
 }
