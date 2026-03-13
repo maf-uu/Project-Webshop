@@ -180,3 +180,9 @@ textarea {
         width: 120px;
     }
 }
+
+@media (max-width: 900px) and (orientation: landscape) {
+    .form-box {
+        width: 60%;
+    }
+}
