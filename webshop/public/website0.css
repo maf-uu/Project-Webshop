@@ -149,9 +149,14 @@ textarea {
     font-weight: bolder;
 }
 
+.cartWrapper {
+    position: relative;
+    display: inline-block;
+}
+
 .cartbadge {
-    right: 55px;
-    top: 7px;
+    top: -10px;
+    right: -10px;
     position: absolute;
     background: red;
     color: white;
@@ -163,6 +168,11 @@ textarea {
     height: auto;
     text-align: center;
     display: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
 }
 
 .accountdetails:hover {
@@ -611,7 +621,7 @@ textarea:focus {
     padding: 0px 18px;
     display: flex;
     flex-direction: column;
-    gap: 0.3em;
+    gap: 0.2em;
     color: white;
 }
 
@@ -635,7 +645,7 @@ textarea:focus {
 
 .browsing h2 {
     font-size: 1.1em;
-    margin-bottom: 12px;
+    margin-bottom: 4px;
     padding-top: 1px;
 }
 
@@ -865,7 +875,7 @@ body.no-scroll {
         z-index: 9;
     }
     .browsing {
-        width: 80%;
+        width: 60%;
         max-width: 320px;
         margin-top: -160px;
     }
@@ -941,5 +951,9 @@ body.no-scroll {
     }
     #contact {
         margin-top: 160px;
+    }
+    .cartbadge {
+        top: 5px;
+        right: -4px;
     }
 }
