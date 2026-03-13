@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+//USER + ITEMS
+model User {
+  id String @id @default(uuid())
+  name String 
+  username String @unique
+  email String @unique
+  password String
+  phone String?
+  gender String?
+  money Int?
+
+  createdAt DateTime @default(now())
+
+  //Kötések
+  ownedItems Items[] @relation("Owner")
+  createdItems Items[] @relation("Feltöltő")
+}
+
+
+model Items {
+  id String @id @default(uuid())
+  userid String
+  name String
+  description String?
+  createdAt DateTime @default(now())
+  createdBy String 
+  price Int
+  itemstatus ItemStatus @default(ELADO)
+  itemType ItemType
+  filePath String?  
+
+  //Kötések
+  owner User @relation("Owner", fields: [userid], references: [id], onDelete: Cascade)
+  creator User @relation("Feltöltő", fields: [createdBy], references: [id], onDelete: Cascade)
+}
+
+enum ItemStatus {
+  ELADO
+  ELADVA
+  NEM_ELERHETO
+}
+
+enum ItemType {
+  AUTOMOTIVE
+  BEAUTY
+  BOOKS
+  CLOTHING
+  ELECTRONICS
+  COLLECTIBLES
+  FURNITURE
+  GARDENING
+  JEWELRY
+  MUSIC
+  PET_SUPPLIES
+  SPORTS
+  TOYS
+}
