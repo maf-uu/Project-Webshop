@@ -192,7 +192,7 @@ function CheckoutReturn() {
 const logo = document.querySelector(".checkoutreturnpng");
 
 window.addEventListener("scroll", () => {
-    if (!logo || window.innerWidth > 690) return;
+    if (!logo || window.innerWidth > 690 || window.innerWidth > window.innerHeight) return;
 
     const scrollY = window.scrollY;
     const fadeEnd = 55;
