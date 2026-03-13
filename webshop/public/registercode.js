@@ -102,18 +102,21 @@ window.addEventListener("load", () => {
 const logo = document.querySelector(".eisenshoptextpng");
 
 window.addEventListener("scroll", () => {
+    if (!logo || window.innerWidth > 690 || window.innerWidth > window.innerHeight) return;
+
     const scrollY = window.scrollY;
+    const fadeEnd = 55;
 
-    const fadeStart = 0;
-    const fadeEnd = 50;
+    const opacity = Math.max(0, 1 - scrollY / fadeEnd);
+    logo.style.opacity = opacity;
 
-    if (window.innerWidth <= 690) {
-        window.addEventListener("scroll", () => {
-            const scrollY = window.scrollY;
-            const fadeEnd = 60;
-
-            logo.style.opacity = Math.max(0, 1 - scrollY / fadeEnd);
-        });
+    if (opacity <= 0.001) {
+        logo.style.pointerEvents = "none";
+        logo.style.visibility = "hidden";
+        logo.classList.add("fade-out");
+    } else {
+        logo.style.pointerEvents = "auto";
+        logo.style.visibility = "visible";
+        logo.classList.remove("fade-out");
     }
 });
-
