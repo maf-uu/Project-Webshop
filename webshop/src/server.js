@@ -12,8 +12,8 @@ const transporter = nodemailer.createTransport({
   port: 587,
   secure: false, // Use true for port 465, false for port 587
   auth: {
-    user: "eisen.shop.reply@gmail.com",
-    pass: "jn7jnAPss4f63QBp6D",
+    user: SMTP_USER,
+    pass: STMP_PASS,
   },
 });
 
