@@ -958,7 +958,7 @@ body.no-scroll {
     }
 }
 
-@media (max-width: 900px) and (orientation: landscape) {
+@media (max-width: 900px) and (max-height:500px) and (orientation: landscape) {
     .browsingContainer {
         visibility: hidden;
         pointer-events: none;
